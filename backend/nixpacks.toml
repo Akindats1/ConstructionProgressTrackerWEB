@@ -1,8 +1,0 @@
-[start]
-cmd = "gunicorn -w 4 -b 0.0.0.0:$PORT app:app"
-
-[phases.build]
-commands = ["echo Build phase - no build needed for Flask"]
-
-[phases.start]
-commands = ["gunicorn -b 0.0.0.0:$PORT app:app"]
