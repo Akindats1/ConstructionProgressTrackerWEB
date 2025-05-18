@@ -1,0 +1,8 @@
+[phases.setup]
+commands = ["pip install -r requirements.txt"]
+
+[phases.build]
+commands = ["echo Build phase - no build needed for Flask"]
+
+[phases.start]
+commands = ["gunicorn -b 0.0.0.0:$PORT app:app"]
