@@ -1,10 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import psycopg2
-from psycopg2.extras import RealDictCursor
-from datetime import datetime
-import re
 import os
+import re
+from datetime import datetime
+from psycopg2.extras import RealDictCursor
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,14 +12,27 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def home():
+    # Example connection
+    conn = psycopg2.connect(
+        host=os.environ['POSTGRES_HOST'],
+        port=os.environ['POSTGRES_PORT'],
+        database=os.environ['POSTGRES_DB'],
+        user=os.environ['POSTGRES_USER'],
+        password=os.environ['POSTGRES_PASSWORD']
+    )
+    return "PostgreSQL connection successful!"
+
 def get_db_connection():
     return psycopg2.connect(
-        host=os.getenv('POSTGRES_HOST'),
-        port=os.getenv('POSTGRES_PORT'),
-        dbname=os.getenv('POSTGRES_DB'),
-        user=os.getenv('POSTGRES_USER'),
-        password=os.getenv('POSTGRES_PASSWORD')
+        host=os.environ['POSTGRES_HOST'],
+        port=os.environ['POSTGRES_PORT'],
+        database=os.environ['POSTGRES_DB'],
+        user=os.environ['POSTGRES_USER'],
+        password=os.environ['POSTGRES_PASSWORD']
     )
+
 
 def validate_task_data(data):
     if not re.match(r'^[\w\s\-()]{3,100}$', data.get('name', '')):
@@ -122,6 +135,5 @@ def delete_task(task_id):
     except Exception as e:
         return jsonify({"error": f"Database error: {str(e)}"}), 500
     
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
