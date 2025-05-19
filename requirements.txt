@@ -1,0 +1,6 @@
+# Core dependencies
+Flask==2.3.2
+python-dotenv==1.0.0
+gunicorn==23.0.0
+psycopg2-binary==2.9.9
+flask-cors==6.0.0
