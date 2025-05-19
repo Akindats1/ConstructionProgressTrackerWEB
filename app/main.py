@@ -53,22 +53,6 @@ def validate_task_data(data):
         except ValueError:
             return {"error": "Invalid deadline format. Use YYYY-MM-DD."}, 400
     
-    # SQL injection prevention
-    sql_injection_pattern = re.compile(r'(;|--|union|select|insert|update|delete|drop)', re.IGNORECASE)
-    for value in data.values():
-        if isinstance(value, str) and sql_injection_pattern.search(value):
-            return {"error": "Invalid input detected"}, 400
-    
-    return None
-
-# Error handlers
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({"error": "Resource not found"}), 404
-
-@app.errorhandler(500)
-def internal_error(error):
-    return jsonify({"error": "Internal server error"}), 500
 
 # Routes
 @app.route('/tasks', methods=['GET'])
