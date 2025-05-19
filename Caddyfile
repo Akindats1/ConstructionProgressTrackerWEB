@@ -1,6 +1,6 @@
 :{$PORT} {
     reverse_proxy localhost:8000
     file_server {
-        root /app/static
+        root /app/static/index.html
     }
 }
