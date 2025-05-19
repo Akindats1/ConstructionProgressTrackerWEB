@@ -1,10 +1,3 @@
-{
-    auto_https off
-}
-
-:{$PORT} {
-    reverse_proxy localhost:8000
-    file_server {
-        root /app/app/static
-    }
+:80 {
+    reverse_proxy app:8000
 }
