@@ -1,3 +1,6 @@
-:80 {
-    reverse_proxy app:8000
+:{$PORT} {
+    reverse_proxy localhost:8000
+    file_server {
+        root /app/templates
+    }
 }
